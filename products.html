@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products — TechShop</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <nav class="navbar" data-testid="navbar">
+    <a href="index.html" class="logo" data-testid="logo">⚡ TechShop</a>
+    <div class="nav-links">
+      <a href="index.html" data-testid="nav-home">Home</a>
+      <a href="products.html" data-testid="nav-products">Products</a>
+      <a href="cart.html" data-testid="nav-cart">
+        Cart <span class="cart-count" data-testid="cart-count" id="cart-count">0</span>
+      </a>
+      <a href="login.html" data-testid="nav-login">Login</a>
+    </div>
+  </nav>
+
+  <section class="section" data-testid="products-section">
+    <div class="products-header">
+      <h1 class="section-title" data-testid="products-title">All Products</h1>
+      <div class="filter-bar" data-testid="filter-bar">
+        <select class="filter-select" data-testid="category-filter" id="category-filter" onchange="filterProducts()">
+          <option value="all">All Categories</option>
+          <option value="audio">Audio</option>
+          <option value="computing">Computing</option>
+          <option value="mobile">Mobile</option>
+          <option value="accessories">Accessories</option>
+        </select>
+        <select class="filter-select" data-testid="sort-filter" id="sort-filter" onchange="filterProducts()">
+          <option value="default">Sort By</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="name">Name A–Z</option>
+        </select>
+      </div>
+    </div>
+    <div class="product-grid" data-testid="product-grid" id="product-grid"></div>
+  </section>
+
+  <footer class="footer" data-testid="footer">
+    <p data-testid="footer-text">© 2026 TechShop Demo — Built for AI for QA Course</p>
+  </footer>
+
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/bugs.js"></script>
+  <script>
+    function filterProducts() {
+      const cat = document.getElementById('category-filter').value;
+      const sort = document.getElementById('sort-filter').value;
+      let filtered = cat === 'all' ? [...PRODUCTS] : PRODUCTS.filter(p => p.category === cat);
+      if (sort === 'price-asc') filtered.sort((a,b) => a.price - b.price);
+      if (sort === 'price-desc') filtered.sort((a,b) => b.price - a.price);
+      if (sort === 'name') filtered.sort((a,b) => a.name.localeCompare(b.name));
+      const grid = document.getElementById('product-grid');
+      grid.innerHTML = '';
+      filtered.forEach(p => { grid.innerHTML += renderProductCard(p); });
+    }
+    filterProducts();
+    updateCartCount();
+  </script>
+</body>
+</html>
