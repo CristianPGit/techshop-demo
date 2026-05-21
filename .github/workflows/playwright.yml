@@ -16,6 +16,9 @@ on:
           - all
           - module2
           - module3
+          - module4
+          - module5
+          - api
           - smoke
 
 jobs:
@@ -185,7 +188,124 @@ jobs:
         with: { node-version: '20', cache: 'npm' }
       - run: npm ci
       - run: npx playwright install chromium --with-deps
+      - name: Start API server
+        run: |
+          node api/server.js &
+          until curl -sf http://localhost:3001/api/health; do sleep 1; done
+        env:
+          API_PORT: 3001
       - name: Run smoke tests
         run: npx playwright test --grep @smoke --reporter=list
         env:
           BASE_URL: http://localhost:3000
+          API_URL: http://localhost:3001
+
+  # ============================================================
+  # MODULE 4 — CI Error Logs & Performance Analysis
+  # ============================================================
+  module4-api:
+    name: 'Module 4 — CI Logs & Performance'
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.test_suite == 'all' || github.event.inputs.test_suite == 'module4' || github.event.inputs.test_suite == 'api' || github.event_name != 'workflow_dispatch' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Start API server
+        run: |
+          node api/server.js &
+          until curl -sf http://localhost:3001/api/health; do sleep 1; done
+          echo "✅ API ready at http://localhost:3001"
+        env:
+          API_PORT: 3001
+
+      - name: Run Module 4 tests
+        id: module4
+        run: npx playwright test tests/module4.spec.js --reporter=list,json
+        env:
+          API_URL: http://localhost:3001
+        continue-on-error: true
+
+      - name: Upload Module 4 results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: module4-results
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7
+
+      - name: Fail if Module 4 tests failed
+        if: steps.module4.outcome == 'failure'
+        run: exit 1
+
+  # ============================================================
+  # MODULE 5 — Jira, Page Objects, Swagger DTOs, Test Data
+  # ============================================================
+  module5-api:
+    name: 'Module 5 — Swagger, DTOs & Test Data'
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.test_suite == 'all' || github.event.inputs.test_suite == 'module5' || github.event.inputs.test_suite == 'api' || github.event_name != 'workflow_dispatch' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Start API server
+        run: |
+          node api/server.js &
+          until curl -sf http://localhost:3001/api/health; do sleep 1; done
+          echo "✅ API ready at http://localhost:3001"
+        env:
+          API_PORT: 3001
+
+      # Module 5.1.2 tests the UI + API together — static server is handled
+      # by Playwright's webServer config in playwright.config.js
+
+      - name: Run Module 5 tests
+        id: module5
+        run: npx playwright test tests/module5.spec.js --reporter=list,json
+        env:
+          BASE_URL: http://localhost:3000
+          API_URL: http://localhost:3001
+        continue-on-error: true
+
+      - name: Upload Module 5 results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: module5-results
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7
+
+      - name: Fail if Module 5 tests failed
+        if: steps.module5.outcome == 'failure'
+        run: exit 1
