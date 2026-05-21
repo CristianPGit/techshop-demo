@@ -1,23 +1,11 @@
 {
   "name": "techshop-demo",
   "version": "1.0.0",
-  "description": "Demo e-commerce site for AI for QA Course — Modules 2–5",
+  "description": "TechShop — demo e-commerce store",
   "scripts": {
     "start": "npx serve . -p 3000",
     "start:api": "node api/server.js",
-    "start:all": "npx concurrently \"npm run start\" \"npm run start:api\"",
-    "test": "npx playwright test",
-    "test:module2": "npx playwright test tests/module2.spec.js",
-    "test:module3": "npx playwright test tests/module3.spec.js",
-    "test:module4": "npx playwright test tests/module4.spec.js",
-    "test:module5": "npx playwright test tests/module5.spec.js",
-    "test:smoke": "npx playwright test --grep @smoke",
-    "test:api": "npx playwright test tests/module4.spec.js tests/module5.spec.js",
-    "test:update-snapshots": "npx playwright test tests/module3.spec.js --update-snapshots",
-    "test:report": "npx playwright show-report",
-    "autofix": "node scripts/autofix-agent.js",
-    "visual-diff": "node scripts/ai-visual-diff.js",
-    "bug-report": "node scripts/create-bug-report.js"
+    "start:all": "npx concurrently \"npm run start\" \"npm run start:api\""
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -26,7 +14,6 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.44.0",
     "concurrently": "^8.2.2",
     "serve": "^14.2.3"
   },

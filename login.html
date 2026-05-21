@@ -8,113 +8,91 @@
 </head>
 <body>
 
-  <nav class="navbar" data-testid="navbar">
-    <a href="index.html" class="logo" data-testid="logo">⚡ TechShop</a>
+  <nav class="navbar">
+    <a href="index.html" class="logo">⚡ TechShop</a>
     <div class="nav-links">
-      <a href="index.html" data-testid="nav-home">Home</a>
-      <a href="products.html" data-testid="nav-products">Products</a>
-      <a href="cart.html" data-testid="nav-cart">
-        Cart <span class="cart-count" data-testid="cart-count" id="cart-count">0</span>
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="cart.html">
+        Cart <span class="cart-count" id="cart-count">0</span>
       </a>
     </div>
   </nav>
 
-  <section class="section login-section" data-testid="login-section">
-    <div class="login-card" data-testid="login-card">
-      <h1 class="login-title" data-testid="login-title">Sign In</h1>
-      <p class="login-subtitle" data-testid="login-subtitle">Welcome back to TechShop</p>
+  <section class="section login-section">
+    <div class="login-card">
+      <h1 class="login-title">Sign In</h1>
+      <p class="login-subtitle">Welcome back to TechShop</p>
 
-      <!-- Demo credentials hint -->
-      <div class="demo-hint" data-testid="demo-hint">
+      <div class="demo-hint">
         <strong>Demo credentials:</strong><br />
-        Email: <code data-testid="demo-email">demo@techshop.com</code><br />
-        Password: <code data-testid="demo-password">password123</code>
+        Email: <code>demo@techshop.com</code><br />
+        Password: <code>password123</code>
       </div>
 
-      <form class="login-form" data-testid="login-form" id="login-form" onsubmit="handleLogin(event)" novalidate>
+      <form class="login-form" id="login-form" onsubmit="handleLogin(event)" novalidate>
 
-        <div class="form-group" data-testid="email-group">
-          <label class="form-label" for="login-email" data-testid="label-email">Email Address</label>
-          <input
-            type="email"
-            class="form-input"
-            data-testid="input-email"
-            id="login-email"
-            placeholder="you@example.com"
-            autocomplete="email"
-          />
-          <span class="field-error" data-testid="error-email" id="error-email"></span>
+        <div class="form-group">
+          <label class="form-label" for="login-email">Email Address</label>
+          <input type="email" class="form-input" id="login-email"
+            placeholder="you@example.com" autocomplete="email" />
+          <span class="field-error" id="error-email"></span>
         </div>
 
-        <div class="form-group" data-testid="password-group">
-          <label class="form-label" for="login-password" data-testid="label-password">Password</label>
+        <div class="form-group">
+          <label class="form-label" for="login-password">Password</label>
           <div class="password-wrapper">
-            <input
-              type="password"
-              class="form-input"
-              data-testid="input-password"
-              id="login-password"
-              placeholder="Enter your password"
-              autocomplete="current-password"
-            />
-            <button type="button" class="toggle-password" data-testid="toggle-password"
+            <input type="password" class="form-input" id="login-password"
+              placeholder="Enter your password" autocomplete="current-password" />
+            <button type="button" class="toggle-password"
               onclick="togglePassword()" aria-label="Show password">👁</button>
           </div>
-          <span class="field-error" data-testid="error-password" id="error-password"></span>
+          <span class="field-error" id="error-password"></span>
         </div>
 
-        <div class="form-check" data-testid="remember-group">
-          <input type="checkbox" id="remember-me" data-testid="remember-me" />
-          <label for="remember-me" data-testid="label-remember">Remember me</label>
+        <div class="form-check">
+          <input type="checkbox" id="remember-me" />
+          <label for="remember-me">Remember me</label>
         </div>
 
-        <!-- Login error banner (shown on bad credentials) -->
-        <div class="login-error" data-testid="login-error" id="login-error" style="display:none">
-          <span data-testid="login-error-message" id="login-error-message">
-            Invalid email or password. Please try again.
-          </span>
+        <div class="login-error" id="login-error" style="display:none">
+          <span id="login-error-message">Invalid email or password. Please try again.</span>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-full" data-testid="login-btn" id="login-btn">
-          Sign In
-        </button>
+        <button type="submit" class="btn btn-primary btn-full" id="login-btn">Sign In</button>
 
       </form>
 
-      <p class="login-footer-text" data-testid="login-footer-text">
+      <p class="login-footer-text">
         Don't have an account?
-        <a href="#" class="login-link" data-testid="signup-link" onclick="showComingSoon(event)">Sign up</a>
+        <a href="#" class="login-link" onclick="showComingSoon(event)">Sign up</a>
       </p>
 
-      <!-- Coming soon notice -->
-      <div class="login-notice" data-testid="login-notice" id="login-notice" style="display:none">
+      <div class="login-notice" id="login-notice" style="display:none">
         Registration is disabled in the demo. Use the demo credentials above.
       </div>
     </div>
   </section>
 
-  <!-- SUCCESS STATE (shown after valid login) -->
-  <div class="login-success" data-testid="login-success" id="login-success" style="display:none">
+  <div class="login-success" id="login-success" style="display:none">
     <div class="success-icon">✅</div>
-    <h2 data-testid="success-title">You're logged in!</h2>
-    <p data-testid="success-message">Welcome back, <span data-testid="success-username" id="success-username"></span>.</p>
-    <a href="index.html" class="btn btn-primary" data-testid="go-shopping">Start Shopping</a>
-    <button class="btn btn-outline" data-testid="logout-btn" style="margin-top:12px" onclick="logout()">Log Out</button>
+    <h2>You're logged in!</h2>
+    <p>Welcome back, <span id="success-username"></span>.</p>
+    <a href="index.html" class="btn btn-primary">Start Shopping</a>
+    <button class="btn btn-outline" style="margin-top:12px" onclick="logout()">Log Out</button>
   </div>
 
-  <footer class="footer" data-testid="footer">
-    <p data-testid="footer-text">© 2026 TechShop Demo — Built for AI for QA Course</p>
+  <footer class="footer">
+    <p>© 2026 TechShop</p>
   </footer>
 
   <script src="js/products.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/bugs.js"></script>
   <script>
-    // Demo credentials
     const DEMO_EMAIL = 'demo@techshop.com';
     const DEMO_PASSWORD = 'password123';
 
-    // Check if already logged in
     window.addEventListener('DOMContentLoaded', () => {
       const user = localStorage.getItem('techshop-user');
       if (user) showSuccessState(user);
@@ -127,7 +105,6 @@
 
       const email = document.getElementById('login-email').value.trim();
       const password = document.getElementById('login-password').value;
-
       let valid = true;
 
       if (!email) {
@@ -145,7 +122,6 @@
 
       if (!valid) return;
 
-      // Simulate network delay
       const btn = document.getElementById('login-btn');
       btn.textContent = 'Signing in…';
       btn.disabled = true;
