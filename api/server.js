@@ -210,6 +210,29 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', version: '1.0.0', timestamp: new Date().toISOString() });
 });
 
+/**
+ * @swagger
+ * /api/version:
+ *   get:
+ *     summary: Service version info
+ *     tags: [Health]
+ *     responses:
+ *       200:
+ *         description: Version metadata
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 name:    { type: string, example: techshop-demo }
+ *                 version: { type: string, example: "1.0.0" }
+ *                 node:    { type: string, example: "v20.11.0" }
+ */
+app.get('/api/version', (req, res) => {
+  const pkg = require('../package.json');
+  res.json({ name: pkg.name, version: pkg.version, node: process.version });
+});
+
 app.use((req, res) => {
   res.status(404).json({ error: 'NOT_FOUND', message: `Route ${req.method} ${req.path} not found` });
 });
