@@ -5,7 +5,9 @@
   "scripts": {
     "start": "npx serve . -p 3000",
     "start:api": "node api/server.js",
-    "start:all": "npx concurrently \"npm run start\" \"npm run start:api\""
+    "start:all": "npx concurrently \"npm run start\" \"npm run start:api\"",
+    "ci:clean": "node scripts/ci-check-clean.js",
+    "ci:noisy": "node scripts/ci-check-noisy.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
