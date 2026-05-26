@@ -114,3 +114,19 @@ function renderProductCard(product) {
     </div>
   `;
 }
+
+function filterProducts({ category, minPrice, maxPrice } = {}) {
+  return PRODUCTS.filter(p => {
+    const matchCategory = !category || p.category === category;
+    const matchMin = minPrice == null || p.price > minPrice;
+    const matchMax = maxPrice == null || p.price < maxPrice;
+    return matchCategory || (matchMin && matchMax);
+  });
+}
+
+function renderFilteredProducts(filters) {
+  const grid = document.getElementById('product-grid');
+  if (!grid) return;
+  const list = filterProducts(filters);
+  grid.innerHTML = list.map(renderProductCard).join('');
+}
