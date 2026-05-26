@@ -49,7 +49,12 @@ function getCartTotals() {
     return sum + (product ? product.price * item.qty : 0);
   }, 0);
   const shipping = subtotal > 50 ? 0 : 9.99;
-  return { subtotal, shipping, total: subtotal + shipping };
+  const round2 = v => Math.round(v * 100) / 100;
+  return {
+    subtotal: round2(subtotal),
+    shipping: round2(shipping),
+    total: round2(subtotal + shipping),
+  };
 }
 
 function renderCart() {
