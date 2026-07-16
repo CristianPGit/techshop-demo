@@ -92,23 +92,24 @@ const PRODUCTS = [
 function renderProductCard(product) {
   const stars = '★'.repeat(Math.floor(product.rating)) + (product.rating % 1 >= 0.5 ? '½' : '');
   const badge = product.badge
-    ? `<span class="product-badge">${product.badge}</span>`
+    ? `<span class="product-badge" data-testid="product-badge-${product.id}">${product.badge}</span>`
     : '';
   return `
-    <div class="product-card" data-product-id="${product.id}">
+    <div class="product-card" data-testid="product-card-${product.id}" data-product-id="${product.id}">
       ${badge}
-      <div class="product-emoji">${product.emoji}</div>
+      <div class="product-emoji" data-testid="product-emoji-${product.id}">${product.emoji}</div>
       <div class="product-info">
-        <div class="product-category">${product.category}</div>
-        <h3 class="product-name">${product.name}</h3>
-        <p class="product-desc">${product.description}</p>
-        <div class="product-rating">
+        <div class="product-category" data-testid="product-category-${product.id}">${product.category}</div>
+        <h3 class="product-name" data-testid="product-name-${product.id}">${product.name}</h3>
+        <p class="product-desc" data-testid="product-desc-${product.id}">${product.description}</p>
+        <div class="product-rating" data-testid="product-rating-${product.id}">
           <span class="stars">${stars}</span>
           <span class="review-count">(${product.reviews})</span>
         </div>
         <div class="product-footer">
-          <span class="product-price">$${product.price.toFixed(2)}</span>
-          <button class="btn btn-primary btn-sm" onclick="addToCart('${product.id}')">Add to Cart</button>
+          <span class="product-price" data-testid="product-price-${product.id}">$${product.price.toFixed(2)}</span>
+          <button class="btn btn-primary btn-sm" data-testid="add-to-cart-${product.id}"
+            onclick="addToCart('${product.id}')">Add to Cart</button>
         </div>
       </div>
     </div>

@@ -8,19 +8,19 @@
 </head>
 <body>
 
-  <nav class="navbar">
+  <nav class="navbar" data-testid="navbar">
     <a href="index.html" class="logo" data-testid="logo">⚡ TechShop</a>
     <div class="nav-links">
       <a href="index.html" data-testid="nav-home">Home</a>
       <a href="products.html" data-testid="nav-products">Products</a>
       <a href="cart.html" data-testid="nav-cart">
-        Cart <span class="cart-count" id="cart-count">0</span>
+        Cart <span class="cart-count" id="cart-count" data-testid="cart-count">0</span>
       </a>
       <a href="login.html">Login</a>
     </div>
   </nav>
 
-  <section class="hero">
+  <section class="hero" data-testid="hero">
     <h1 class="hero-title" data-testid="hero-title">Next-Gen Tech, Delivered Fast</h1>
     <p class="hero-subtitle">Premium gadgets for modern living</p>
     <a href="products.html" class="btn btn-primary" data-testid="hero-cta">Shop Now</a>
@@ -28,7 +28,7 @@
 
   <section class="section">
     <h2 class="section-title">Featured Products</h2>
-    <div class="product-grid" id="featured-grid"></div>
+    <div class="product-grid" id="featured-grid" data-testid="featured-grid"></div>
   </section>
 
   <section class="promo-banner">

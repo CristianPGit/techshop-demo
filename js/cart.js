@@ -59,7 +59,7 @@ function renderCart() {
 
   if (cart.length === 0) {
     container.innerHTML = `
-      <div class="cart-empty">
+      <div class="cart-empty" data-testid="cart-empty">
         <p>Your cart is empty.</p>
         <a href="products.html" class="btn btn-primary">Shop Now</a>
       </div>`;
@@ -70,19 +70,19 @@ function renderCart() {
       const product = PRODUCTS.find(p => p.id === item.id);
       if (!product) return '';
       return `
-        <div class="cart-item" data-product-id="${product.id}">
-          <div class="cart-item-emoji">${product.emoji}</div>
+        <div class="cart-item" data-testid="cart-item-${product.id}" data-product-id="${product.id}">
+          <div class="cart-item-emoji" data-testid="cart-emoji-${product.id}">${product.emoji}</div>
           <div class="cart-item-info">
-            <h4>${product.name}</h4>
-            <p class="cart-item-price">$${product.price.toFixed(2)} each</p>
+            <h4 data-testid="cart-name-${product.id}">${product.name}</h4>
+            <p class="cart-item-price" data-testid="cart-price-${product.id}">$${product.price.toFixed(2)} each</p>
           </div>
           <div class="cart-item-controls">
-            <button class="qty-btn" onclick="changeQty('${product.id}', -1)">−</button>
-            <span class="qty-val">${item.qty}</span>
-            <button class="qty-btn" onclick="changeQty('${product.id}', 1)">+</button>
+            <button class="qty-btn" data-testid="qty-minus-${product.id}" onclick="changeQty('${product.id}', -1)">−</button>
+            <span class="qty-val" data-testid="qty-val-${product.id}">${item.qty}</span>
+            <button class="qty-btn" data-testid="qty-plus-${product.id}" onclick="changeQty('${product.id}', 1)">+</button>
           </div>
-          <div class="cart-item-total">$${(product.price * item.qty).toFixed(2)}</div>
-          <button class="remove-btn" onclick="removeFromCart('${product.id}')">✕</button>
+          <div class="cart-item-total" data-testid="cart-total-${product.id}">$${(product.price * item.qty).toFixed(2)}</div>
+          <button class="remove-btn" data-testid="remove-btn-${product.id}" onclick="removeFromCart('${product.id}')">✕</button>
         </div>`;
     }).join('');
   }
@@ -114,6 +114,7 @@ function renderCheckoutSummary() {
 function showToast(msg) {
   const t = document.createElement('div');
   t.className = 'toast';
+  t.setAttribute('data-testid', 'toast');
   t.textContent = msg;
   document.body.appendChild(t);
   setTimeout(() => t.classList.add('show'), 10);

@@ -7,7 +7,18 @@
     "start:api": "node api/server.js",
     "start:all": "npx concurrently \"npm run start\" \"npm run start:api\"",
     "ci:clean": "node scripts/ci-check-clean.js",
-    "ci:noisy": "node scripts/ci-check-noisy.js"
+    "ci:noisy": "node scripts/ci-check-noisy.js",
+    "qa": "playwright test",
+    "qa:e2e": "playwright test --project=chromium",
+    "qa:api": "playwright test --project=api",
+    "qa:bugs": "playwright test --project=bugs",
+    "qa:ui": "playwright test --ui",
+    "qa:report": "playwright show-report qa/report",
+    "test": "npx playwright test --config=playwright.config.js",
+    "test:module2": "npx playwright test --config=playwright.config.js tests/module2.spec.js",
+    "test:report": "npx playwright show-report",
+    "autofix": "node scripts/autofix-limited.js",
+    "autofix:pipeline": "node scripts/autofix-pipeline.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -16,6 +27,7 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.49.0",
     "concurrently": "^8.2.2",
     "serve": "^14.2.3"
   },

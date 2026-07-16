@@ -1,6 +1,8 @@
 node_modules/
 test-results/
 playwright-report/
+qa/report/
+.last-run.json
 .autofix-state.json
 *.bak
 .DS_Store

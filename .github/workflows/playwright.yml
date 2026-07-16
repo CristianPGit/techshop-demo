@@ -1,0 +1,40 @@
+name: Module 2 — Playwright + Auto-fix
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  module2:
+    name: Module 2 — locator tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20', cache: 'npm' }
+      - run: npm ci
+      - run: npx playwright install chromium --with-deps
+
+      - name: Run Module 2 tests
+        id: tests
+        run: npx playwright test tests/module2.spec.js --reporter=list,json
+        continue-on-error: true
+
+      # Auto-fix agent (lesson 2.3.5) — one attempt, then escalate.
+      - name: Auto-fix agent
+        if: steps.tests.outcome == 'failure'
+        run: node scripts/autofix-pipeline.js failure
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          JIRA_BASE_URL:    ${{ secrets.JIRA_BASE_URL }}
+          JIRA_API_TOKEN:   ${{ secrets.JIRA_API_TOKEN }}
+          JIRA_EMAIL:       ${{ secrets.JIRA_EMAIL }}
+          JIRA_PROJECT_KEY: ${{ secrets.JIRA_PROJECT_KEY }}
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: module2-results
+          path: test-results/
+          retention-days: 7
