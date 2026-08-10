@@ -6,3 +6,12 @@ qa/report/
 .autofix-state.json
 *.bak
 .DS_Store
+
+# Machine-local Claude Code permissions (home paths, per-machine allowlist)
+.claude/settings.local.json
+
+# Browser-session artifacts from MCP runs
+.playwright-mcp/
+
+# Client QA work for third-party sites — this repo is public, keep it out
+.qa/lavinmedia/
